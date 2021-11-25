@@ -1,18 +1,16 @@
-import React from 'react';
-import { Button, ChakraProvider } from "@chakra-ui/react"
-import { BrowserRouter } from 'react-router-dom';
+import React from "react";
+import { ChakraProvider } from "@chakra-ui/react";
+import { BrowserRouter } from "react-router-dom";
 
-import './App.css';
-import theme from "./theme/theme"
-import { Router } from "./router/Router"
-function App() {
+import theme from "./theme/theme";
+import { Router } from "./router/Router";
+
+export default function App() {
   return (
     <ChakraProvider theme={theme}>
       <BrowserRouter>
-        <Router></Router>
+        <Router />
       </BrowserRouter>
-    </ ChakraProvider>
+    </ChakraProvider>
   );
 }
-
-export default App;

@@ -1,21 +1,37 @@
-import { Switch } from "@chakra-ui/react";
-import { memo, VFC } from "react";
-import { Routes, Route } from "react-router-dom";
-import { Home } from "../components/pages/Home";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+
 import { Login } from "../components/pages/Login";
+import { homeRoutes } from "./HomeRoutes";
 import { Page404 } from "../components/pages/Page404";
-import { Setting } from "../components/pages/Setting";
-import { UserManagement } from "../components/pages/UserManagement";
+import { HeaderLayout } from "../components/templates/HeaderLayout";
 
 
-export const Router: VFC = memo(() => {
+export const Router = () => {
     return (
-        <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/home/user_management" element={<UserManagement />} />
-            <Route path="/home/setting" element={<Setting />} />
-            <Route path="*" element={<Page404 />} />
-        </Routes>
+        <Switch>
+            <Route exact path="/">
+                <Login />
+            </Route>
+            <Route
+                path="/home"
+                render={({ match: { url } }) => (
+                    <Switch>
+                        {homeRoutes.map((route) => (
+                            <Route
+                                key={route.path}
+                                exact={route.exact}
+                                path={`${url}${route.path}`}
+                            >
+                                <HeaderLayout>{route.children}</HeaderLayout>
+                            </Route>
+                        ))}
+                    </Switch>
+                )}
+            />
+            <Route path="*">
+                <Page404 />
+            </Route>
+        </Switch>
     )
-})
+}
